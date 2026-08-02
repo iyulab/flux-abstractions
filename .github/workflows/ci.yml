@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET 10
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore
+      run: dotnet restore Flux.Abstractions.slnx
+
+    - name: Build
+      run: dotnet build Flux.Abstractions.slnx --no-restore --configuration Release
+
+    # This package must stay dependency-free: it sits below every consumer, so any
+    # PackageReference added here becomes a version floor for the whole ecosystem.
+    # Checked here rather than by convention, because the cost of noticing it late is high.
+    - name: Assert the package declares no dependencies
+      run: |
+        dotnet pack src/Flux.Abstractions/Flux.Abstractions.csproj --no-build --configuration Release --output ./nupkg
+        cd ./nupkg
+        unzip -o -q ./*.nupkg -d extracted
+        if grep -q '<dependency ' extracted/*.nuspec; then
+          echo "::error::Flux.Abstractions declares package dependencies. This package is required to stay dependency-free."
+          grep '<dependency ' extracted/*.nuspec
+          exit 1
+        fi
+        echo "OK - no dependencies declared."
