@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.25.0] - 2026-09-15
+
+### Added
+- `TextCompletionOptions.ResponseSchema` — the JSON Schema (as JSON text) a response must satisfy. A caller that
+  knows the shape it will parse can now pass it through `ITextCompletionService`; `ResponseFormat = "json"` could
+  only ask for "some object". Implementations over providers with schema-constrained output enforce it; others may
+  ignore it and fall back to `ResponseFormat`. Additive — nothing changes for callers that do not set it.
+
 ## [0.24.0] - 2026-08-02
 
 ### Changed

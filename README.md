@@ -16,7 +16,7 @@ dotnet add package Flux.Abstractions
 | `ISourceMetadata` | Where a chunk came from, for traceability and filtering. |
 | `ILanguageProfile` | The minimal language-specific segmentation metadata every module agrees on. |
 | `ITextCompletionService` | A text-completion port, so a pipeline stage can call a model without binding to a provider. |
-| `TextCompletionOptions` | Sampling options for the above. |
+| `TextCompletionOptions` | Sampling and output options for the above, including `ResponseFormat` and a `ResponseSchema` (JSON Schema text) for schema-constrained output. |
 
 `IEnrichedChunk` and `ISourceMetadata` are deliberately a **superset union** of what the
 individual modules produce: an implementation returns `null` or the default for fields that do

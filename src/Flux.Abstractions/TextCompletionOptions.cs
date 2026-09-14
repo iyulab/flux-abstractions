@@ -46,4 +46,14 @@ public class TextCompletionOptions
     /// Response format hint (e.g., "json" for JSON mode).
     /// </summary>
     public string? ResponseFormat { get; init; }
+
+    /// <summary>
+    /// JSON Schema (as JSON text) the response must satisfy.
+    /// </summary>
+    /// <remarks>
+    /// An implementation whose provider supports schema-constrained output enforces it (strict structured output);
+    /// one that does not may ignore it and fall back to <see cref="ResponseFormat"/>. When both are set, the schema
+    /// is the more specific request. Not validated here: an invalid schema is reported by the provider that reads it.
+    /// </remarks>
+    public string? ResponseSchema { get; init; }
 }
