@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.26.0] - 2026-09-23
+
+### Added
+- **`TextCompletionTruncatedException` — an `ITextCompletionService` can say its output was cut off.** `CompleteAsync`
+  returns text only, so a completion that stopped at `MaxTokens` was indistinguishable from a finished one and a stage
+  that stores or rewrites content with it adopted the partial answer. Implementations that can observe the provider's
+  completion reason throw this instead (it carries `MaxTokens` when known); others return text as before. The type is
+  not sealed so a library that already names the condition can derive from it. Additive — no signature changes.
+
 ## [0.25.0] - 2026-09-15
 
 ### Added

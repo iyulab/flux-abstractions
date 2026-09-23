@@ -12,7 +12,7 @@
       The package id is unchanged, so the sequence must keep moving forward: consumers
       resolving "latest" must never be handed something older than what they already have.
     -->
-    <Version>0.25.0</Version>
+    <Version>0.26.0</Version>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <FileVersion>$(Version).0</FileVersion>
   </PropertyGroup>
