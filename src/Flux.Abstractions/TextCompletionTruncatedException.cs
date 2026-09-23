@@ -33,6 +33,16 @@ public class TextCompletionTruncatedException : Exception
         MaxTokens = maxTokens;
     }
 
+    /// <summary>
+    /// Creates the exception for a call that asked for <paramref name="maxTokens"/> output tokens, wrapping the error that
+    /// reported it (for example when one layer translates another's truncation into its own type).
+    /// </summary>
+    public TextCompletionTruncatedException(int maxTokens, Exception? innerException)
+        : base($"The model stopped at the output token limit ({maxTokens} tokens); the response is truncated.", innerException)
+    {
+        MaxTokens = maxTokens;
+    }
+
     /// <summary>The output token limit the call ran into, when known.</summary>
     public int? MaxTokens { get; }
 }
