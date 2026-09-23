@@ -20,8 +20,8 @@ public interface ITextCompletionService
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Generated text completion.</returns>
     /// <exception cref="TextCompletionTruncatedException">
-    /// The model stopped at the output token limit — thrown by implementations that can observe the completion reason,
-    /// instead of returning truncated text.
+    /// <see cref="TextCompletionOptions.ThrowOnTruncation"/> is set and the model stopped at the output token limit — thrown
+    /// by implementations that can observe the completion reason, instead of returning truncated text.
     /// </exception>
     Task<string> CompleteAsync(
         string prompt,

@@ -7,9 +7,10 @@ namespace Flux.Abstractions;
 /// <remarks>
 /// A completion that ran out of output budget looks like any other string to the caller. An implementation that can
 /// observe the provider's completion reason (for example <c>finish_reason = "length"</c>) throws this instead of
-/// returning the truncated text, so a stage that stores or replaces content with the result (summaries, rewrites,
-/// extractions) can keep its input rather than adopt a partial answer. Implementations that cannot observe the reason
-/// return the text as before. Not sealed: a library that already names this condition in its own contract can derive
+/// returning the truncated text when the caller set <see cref="TextCompletionOptions.ThrowOnTruncation"/>, so a stage
+/// that stores or replaces content with the result (summaries, rewrites, extractions) can keep its input rather than
+/// adopt a partial answer. Without the option, and in implementations that cannot observe the reason, the text is
+/// returned as before. Not sealed: a library that already names this condition in its own contract can derive
 /// from it, so one <c>catch</c> covers both.
 /// </remarks>
 public class TextCompletionTruncatedException : Exception

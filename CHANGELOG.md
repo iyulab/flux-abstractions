@@ -13,8 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`TextCompletionTruncatedException` — an `ITextCompletionService` can say its output was cut off.** `CompleteAsync`
   returns text only, so a completion that stopped at `MaxTokens` was indistinguishable from a finished one and a stage
   that stores or rewrites content with it adopted the partial answer. Implementations that can observe the provider's
-  completion reason throw this instead (it carries `MaxTokens` when known); others return text as before. The type is
+  completion reason throw this instead when asked (it carries `MaxTokens` when known); others return text as before. The type is
   not sealed so a library that already names the condition can derive from it. Additive — no signature changes.
+- **`TextCompletionOptions.ThrowOnTruncation` — callers opt in to that exception.** Default `false`: truncated text is
+  returned exactly as before, so a call that deliberately asks for a handful of tokens (a verdict, a label) is not
+  broken. A stage that stores or replaces content with the result sets it and catches the exception. Implementations
+  that cannot observe the completion reason ignore it.
 
 ## [0.25.0] - 2026-09-15
 

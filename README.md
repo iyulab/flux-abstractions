@@ -16,8 +16,8 @@ dotnet add package Flux.Abstractions
 | `ISourceMetadata` | Where a chunk came from, for traceability and filtering. |
 | `ILanguageProfile` | The minimal language-specific segmentation metadata every module agrees on. |
 | `ITextCompletionService` | A text-completion port, so a pipeline stage can call a model without binding to a provider. |
-| `TextCompletionOptions` | Sampling and output options for the above, including `ResponseFormat` and a `ResponseSchema` (JSON Schema text) for schema-constrained output. |
-| `TextCompletionTruncatedException` | What an `ITextCompletionService` throws when the model stopped at the output token limit, instead of returning cut-off text. Implementations that can observe the completion reason throw it; a caller that stores or replaces content with the result catches it and keeps its input. |
+| `TextCompletionOptions` | Sampling and output options for the above, including `ResponseFormat`, a `ResponseSchema` (JSON Schema text) for schema-constrained output, and `ThrowOnTruncation` (opt in to `TextCompletionTruncatedException`). |
+| `TextCompletionTruncatedException` | What an `ITextCompletionService` throws when the model stopped at the output token limit and the caller set `TextCompletionOptions.ThrowOnTruncation`, instead of returning cut-off text. Implementations that can observe the completion reason throw it; a caller that stores or replaces content with the result catches it and keeps its input. |
 
 `IEnrichedChunk` and `ISourceMetadata` are deliberately a **superset union** of what the
 individual modules produce: an implementation returns `null` or the default for fields that do

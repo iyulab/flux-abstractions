@@ -56,4 +56,18 @@ public class TextCompletionOptions
     /// is the more specific request. Not validated here: an invalid schema is reported by the provider that reads it.
     /// </remarks>
     public string? ResponseSchema { get; init; }
+
+    /// <summary>
+    /// When <c>true</c>, an implementation that can observe the completion reason throws
+    /// <see cref="TextCompletionTruncatedException"/> if the model stopped at <see cref="MaxTokens"/>, instead of returning
+    /// the cut-off text. Default: <c>false</c> — truncated text is returned as before.
+    /// </summary>
+    /// <remarks>
+    /// Opt in where a partial answer would be worse than no answer: a stage that stores or replaces content with the result
+    /// (a summary, a rewrite, a hypothetical document to embed) can catch the exception and keep its input. Leave it off for
+    /// calls that deliberately ask for very few tokens and read only the start of the answer (a one-word verdict, a short
+    /// label), where stopping at the limit is expected. An implementation that cannot observe the completion reason ignores
+    /// this option and returns the text; its documentation says so.
+    /// </remarks>
+    public bool ThrowOnTruncation { get; init; }
 }
