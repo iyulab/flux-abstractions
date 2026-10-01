@@ -70,4 +70,15 @@ public class TextCompletionOptions
     /// this option and returns the text; its documentation says so.
     /// </remarks>
     public bool ThrowOnTruncation { get; init; }
+
+    /// <summary>
+    /// Whether a reasoning model may think before answering: <c>true</c> on, <c>false</c> off, <c>null</c> (default) the
+    /// model's own default.
+    /// </summary>
+    /// <remarks>
+    /// Reasoning shares <see cref="MaxTokens"/> with the answer. A short extraction (a summary, keywords, a label) asked of a
+    /// reasoning model on its template default can spend the whole budget thinking and come back cut off — turn it off for
+    /// such calls. An implementation whose provider has no such switch ignores it.
+    /// </remarks>
+    public bool? EnableThinking { get; init; }
 }

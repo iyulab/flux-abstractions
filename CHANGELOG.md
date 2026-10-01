@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.27.0] - Unreleased
+
+### Added
+- **`TextCompletionOptions.EnableThinking`** (`bool?`, default `null` = the model's own default): turns a reasoning
+  model's thinking on or off for one call. A short extraction asked of a reasoning model on its default can spend the
+  whole `MaxTokens` budget thinking and come back cut off; callers that need a short answer turn it off. Implementations
+  without such a switch ignore it.
+- The package now carries the `LICENSE` text, not only the MIT expression.
+
 ## [0.26.0] - 2026-09-23
 
 ### Added
