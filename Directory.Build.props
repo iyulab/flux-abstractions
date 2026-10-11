@@ -13,6 +13,8 @@
       resolving "latest" must never be handed something older than what they already have.
     -->
     <Version>0.27.0</Version>
+    <!-- nuget.org «Release Notes»: the GitHub release of this version (its notes are the CHANGELOG section). -->
+    <PackageReleaseNotes>https://github.com/iyulab/flux-abstractions/releases/tag/v$(Version)</PackageReleaseNotes>
     <AssemblyVersion>$(Version).0</AssemblyVersion>
     <FileVersion>$(Version).0</FileVersion>
   </PropertyGroup>
