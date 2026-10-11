@@ -1,12 +1,18 @@
 # Flux.Abstractions
 
-Shared contracts for the Flux RAG ecosystem. Pure interfaces, **zero dependencies**.
+Shared contracts for the Flux RAG ecosystem. Interfaces plus one options type and one exception, **zero dependencies**.
 
 [![NuGet](https://img.shields.io/nuget/v/Flux.Abstractions.svg)](https://www.nuget.org/packages/Flux.Abstractions/)
 
 ```bash
 dotnet add package Flux.Abstractions
 ```
+
+## Packages
+
+| Package | Purpose |
+|---|---|
+| `Flux.Abstractions` | Contract types shared by the Flux packages (chunks, source metadata, language profile, text completion). Nothing to register: a producing package implements these types, a consuming package or app references them. |
 
 ## What is in here
 
@@ -15,7 +21,7 @@ dotnet add package Flux.Abstractions
 | `IEnrichedChunk` | A document chunk plus the metadata a retrieval layer needs to rank and cite it. |
 | `ISourceMetadata` | Where a chunk came from, for traceability and filtering. |
 | `ILanguageProfile` | The minimal language-specific segmentation metadata every module agrees on. |
-| `ITextCompletionService` | A text-completion port, so a pipeline stage can call a model without binding to a provider. |
+| `ITextCompletionService` | A text-completion port, so a pipeline stage can call a model without binding to a provider. Implementers write `CompleteAsync`; `CompleteJsonAsync`, `CompleteBatchAsync` and `CompleteStreamAsync` have default implementations built on it (override them when the backend can do better, for example real streaming). |
 | `TextCompletionOptions` | Sampling and output options for the above, including `ResponseFormat`, a `ResponseSchema` (JSON Schema text) for schema-constrained output, `ThrowOnTruncation` (opt in to `TextCompletionTruncatedException`) and `EnableThinking` (turn a reasoning model's thinking on or off for one call; `null` = model default). |
 | `TextCompletionTruncatedException` | What an `ITextCompletionService` throws when the model stopped at the output token limit and the caller set `TextCompletionOptions.ThrowOnTruncation`, instead of returning cut-off text. Implementations that can observe the completion reason throw it; a caller that stores or replaces content with the result catches it and keeps its input. |
 
